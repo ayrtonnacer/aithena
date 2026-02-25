@@ -1,73 +1,56 @@
-# Welcome to your Lovable project
+# Aithena
 
-## Project info
+**Prótesis de funciones ejecutivas para adultos con TEA.**
 
-**URL**: https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID
+Aithena es una aplicación web diseñada para personas con Trastorno del Espectro Autista (TEA) que experimentan bloqueo cognitivo, dificultad para iniciar tareas y *time blindness*. Externaliza el proceso de planificación: recibí una tarea en lenguaje natural, la descompone automáticamente vía IA en micro-pasos secuenciales concretos, y te guía en la ejecución con un timer visual paso a paso.
 
-## How can I edit this code?
+> Un paso. Ahora. Solo eso.
 
-There are several ways of editing your application.
+---
 
-**Use Lovable**
+## ¿Cómo funciona?
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and start prompting.
+1. **Ingresá tu tarea** en lenguaje natural (ej: "preparar el bolso para el gym")
+2. **La IA la desglosa** en micro-pasos concretos y secuenciales
+3. **Ejecutá paso a paso** con un timer visual que te indica cuánto tiempo dedicar a cada uno
+4. **Completaste.** Sin sobrecarga cognitiva, sin paralización.
 
-Changes made via Lovable will be committed automatically to this repo.
+---
 
-**Use your preferred IDE**
+## Stack tecnológico
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+- **Vite** + **React** + **TypeScript**
+- **Tailwind CSS** + **shadcn-ui**
+- IA para el desglose de tareas
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+---
 
-Follow these steps:
+## Desarrollo local
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+```bash
+# 1. Clonar el repositorio
+git clone https://github.com/ayrtonnacer/aithena.git
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+# 2. Entrar al directorio
+cd aithena
 
-# Step 3: Install the necessary dependencies.
-npm i
+# 3. Instalar dependencias
+npm install
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# 4. Correr el servidor de desarrollo
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+Requiere Node.js. Se recomienda instalar con [nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+---
 
-**Use GitHub Codespaces**
+## Editar con Lovable
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+Podés editar este proyecto directamente desde [Lovable](https://lovable.dev). Los cambios se commitean automáticamente a este repo.
 
-## What technologies are used for this project?
+---
 
-This project is built with:
+## Contexto del proyecto
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
-
-## How can I deploy this project?
-
-Simply open [Lovable](https://lovable.dev/projects/REPLACE_WITH_PROJECT_ID) and click on Share -> Publish.
-
-## Can I connect a custom domain to my Lovable project?
-
-Yes, you can!
-
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
-
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+Aithena nació de la necesidad de reducir la carga cognitiva asociada a la iniciación y ejecución de tareas en personas neurodivergentes. El foco extremo en **una sola tarea, un solo paso** busca eliminar la paralización por iniciación que afecta a muchos adultos con TEA.
