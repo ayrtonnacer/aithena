@@ -52,29 +52,25 @@ const TaskBreakdown = () => {
     });
   };
 
-  const startFirstStep = () => {
-    navigate('/focus');
-  };
-
   return (
     <div className="min-h-screen bg-background">
-      <div className="max-w-2xl mx-auto px-6 py-10 animate-fade-in">
+      <div className="max-w-lg mx-auto px-6 py-10 animate-fade-in">
         <h1 className="text-2xl font-bold text-foreground mb-1">{task.name}</h1>
-        <p className="text-muted-foreground mb-6">
-          {task.steps.length} pasos · ~{task.totalEstimatedMinutes} minutos estimados
+        <p className="text-sm text-muted-foreground mb-6">
+          {task.steps.length} pasos · ~{task.totalEstimatedMinutes} min
         </p>
 
         <TaskProgressBar completedSteps={completedSteps} totalSteps={task.steps.length} />
 
-        <div className="mt-8 space-y-3">
+        <div className="mt-8 space-y-2">
           {task.steps.map((step, index) => (
             <div
               key={step.id}
               className="group flex items-start gap-3 p-4 rounded-lg bg-card border border-border
-                transition-all duration-200 hover:shadow-sm"
+                transition-all duration-200 hover:border-ring/20"
             >
-              <span className="flex-shrink-0 w-8 h-8 rounded-full bg-primary/10 text-primary
-                flex items-center justify-center text-sm font-bold mt-0.5">
+              <span className="flex-shrink-0 w-7 h-7 rounded-full bg-muted text-muted-foreground
+                flex items-center justify-center text-xs font-medium mt-0.5">
                 {step.stepNumber}
               </span>
 
@@ -86,19 +82,19 @@ const TaskBreakdown = () => {
                     onChange={(e) => updateStepTitle(step.id, e.target.value)}
                     onBlur={() => setEditingId(null)}
                     onKeyDown={(e) => e.key === 'Enter' && setEditingId(null)}
-                    className="w-full bg-transparent border-b border-primary text-foreground font-medium
-                      focus:outline-none pb-1"
+                    className="w-full bg-transparent border-b border-ring text-foreground font-medium
+                      focus:outline-none pb-1 text-sm"
                     autoFocus
                   />
                 ) : (
                   <p
-                    className="font-medium text-foreground cursor-pointer hover:text-primary transition-colors"
+                    className="font-medium text-foreground cursor-pointer hover:text-muted-foreground transition-colors text-sm"
                     onClick={() => setEditingId(step.id)}
                   >
                     {step.title}
                   </p>
                 )}
-                <p className="text-sm text-muted-foreground mt-1">{step.description}</p>
+                <p className="text-xs text-muted-foreground mt-1">{step.description}</p>
               </div>
 
               <div className="flex items-center gap-1 flex-shrink-0">
@@ -106,18 +102,18 @@ const TaskBreakdown = () => {
                   type="number"
                   value={step.estimatedDurationMinutes}
                   onChange={(e) => updateStepDuration(step.id, parseInt(e.target.value) || 1)}
-                  className="w-14 text-center text-sm bg-secondary text-secondary-foreground rounded-md py-1
-                    border-none focus:outline-none focus:ring-1 focus:ring-primary"
+                  className="w-12 text-center text-xs bg-muted text-muted-foreground rounded py-1
+                    border-none focus:outline-none focus:ring-1 focus:ring-ring"
                   min={1}
                 />
                 <span className="text-xs text-muted-foreground">min</span>
 
-                <div className="flex flex-col ml-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                <div className="flex flex-col ml-1 opacity-0 group-hover:opacity-100 transition-opacity">
                   <button onClick={() => moveStep(index, -1)} className="p-0.5 text-muted-foreground hover:text-foreground" aria-label="Mover arriba">
-                    <ArrowUp size={14} />
+                    <ArrowUp size={12} />
                   </button>
                   <button onClick={() => moveStep(index, 1)} className="p-0.5 text-muted-foreground hover:text-foreground" aria-label="Mover abajo">
-                    <ArrowDown size={14} />
+                    <ArrowDown size={12} />
                   </button>
                 </div>
 
@@ -128,7 +124,7 @@ const TaskBreakdown = () => {
                       opacity-0 group-hover:opacity-100"
                     aria-label="Eliminar paso"
                   >
-                    <Trash2 size={14} />
+                    <Trash2 size={12} />
                   </button>
                 )}
               </div>
@@ -137,11 +133,11 @@ const TaskBreakdown = () => {
         </div>
 
         <button
-          onClick={startFirstStep}
-          className="w-full mt-8 py-4 rounded-lg bg-primary text-primary-foreground font-bold text-lg
-            hover:opacity-90 transition-all duration-300"
+          onClick={() => navigate('/focus')}
+          className="w-full mt-8 py-3.5 rounded-lg bg-primary text-primary-foreground font-medium text-lg
+            hover:opacity-90 transition-all duration-200"
         >
-          Comenzar primer paso
+          Comenzar →
         </button>
       </div>
     </div>

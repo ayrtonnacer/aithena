@@ -8,10 +8,10 @@ const Rest = () => {
     <div className="min-h-screen bg-background flex items-center justify-center px-6">
       <div className="text-center animate-fade-in">
         <p className="text-5xl mb-6">🌿</p>
-        <h1 className="text-3xl font-bold text-foreground mb-4">
+        <h1 className="text-3xl font-bold text-foreground mb-3">
           Buen trabajo, {state.userName}.
         </h1>
-        <p className="text-xl text-muted-foreground max-w-md">
+        <p className="text-lg text-muted-foreground max-w-sm">
           Descansá tranquilo. Cuando estés listo, volvé para tu próxima tarea.
         </p>
       </div>

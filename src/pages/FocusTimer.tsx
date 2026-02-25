@@ -23,7 +23,6 @@ const FocusTimer = () => {
 
   const timer = useTimer((currentStep?.estimatedDurationMinutes ?? 15) * 60);
 
-  // Reset timer when step changes
   useEffect(() => {
     if (currentStep) {
       timer.reset(currentStep.estimatedDurationMinutes * 60);
@@ -33,7 +32,6 @@ const FocusTimer = () => {
   if (!task || !currentStep) return null;
 
   const handleFinishStep = () => {
-    // Save actual duration
     updateActiveTask(t => {
       const steps = t.steps.map((s, i) =>
         i === t.currentStepIndex
@@ -47,7 +45,6 @@ const FocusTimer = () => {
       };
     });
 
-    // Check if last step
     const isLastStep = task.currentStepIndex === task.steps.length - 1;
     if (isLastStep) {
       navigate('/completion');
@@ -65,16 +62,15 @@ const FocusTimer = () => {
     navigate('/home');
   };
 
-  // Transition screen
   if (showTransition) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center px-6">
-        <div className="text-center max-w-md animate-fade-in">
-          <div className="w-16 h-16 rounded-full bg-success/10 flex items-center justify-center mx-auto mb-6">
-            <Check className="w-8 h-8 text-success animate-check-bounce" />
+        <div className="text-center max-w-sm animate-fade-in">
+          <div className="w-14 h-14 rounded-full bg-success/10 flex items-center justify-center mx-auto mb-6">
+            <Check className="w-7 h-7 text-success animate-check-bounce" />
           </div>
           <h2 className="text-2xl font-bold text-foreground mb-2">¡Paso completado!</h2>
-          <p className="text-muted-foreground mb-2">Terminaste: {currentStep.title}</p>
+          <p className="text-muted-foreground mb-2">{currentStep.title}</p>
 
           {nextStep && (
             <p className="text-sm text-muted-foreground mb-8">
@@ -83,22 +79,20 @@ const FocusTimer = () => {
             </p>
           )}
 
-          <p className="text-lg text-foreground mb-6">¿Pasamos al siguiente paso?</p>
-
           <div className="space-y-3">
             <button
               onClick={handleNextStep}
-              className="w-full py-4 rounded-lg bg-primary text-primary-foreground font-bold text-lg
-                hover:opacity-90 transition-all duration-300"
+              className="w-full py-3.5 rounded-lg bg-primary text-primary-foreground font-medium text-lg
+                hover:opacity-90 transition-all duration-200"
             >
-              Sí, sigamos
+              Siguiente paso →
             </button>
             <button
               onClick={handleRest}
               className="w-full py-3 rounded-lg bg-secondary text-secondary-foreground font-medium
-                hover:bg-secondary/80 transition-all duration-300"
+                hover:bg-secondary/80 transition-all duration-200"
             >
-              No, descanso
+              Descansar
             </button>
           </div>
         </div>
@@ -108,12 +102,10 @@ const FocusTimer = () => {
 
   return (
     <div className="min-h-screen bg-background flex flex-col">
-      {/* Progress */}
-      <div className="px-6 pt-6 max-w-2xl mx-auto w-full">
+      <div className="px-6 pt-6 max-w-lg mx-auto w-full">
         <TaskProgressBar completedSteps={completedSteps} totalSteps={task.steps.length} />
       </div>
 
-      {/* Main timer area */}
       <div className="flex-1 flex items-center justify-center px-6">
         <div className="text-center animate-fade-in">
           <p className="text-sm text-muted-foreground mb-1">
@@ -122,7 +114,7 @@ const FocusTimer = () => {
           <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
             {currentStep.title}
           </h1>
-          <p className="text-muted-foreground mb-8 max-w-md mx-auto">
+          <p className="text-muted-foreground mb-8 max-w-sm mx-auto text-sm">
             {currentStep.description}
           </p>
 
@@ -132,35 +124,34 @@ const FocusTimer = () => {
             status={timer.status}
           />
 
-          {/* Controls */}
           <div className="flex items-center justify-center gap-3 mt-8 flex-wrap">
             {timer.status === 'idle' && (
               <button
                 onClick={timer.start}
-                className="flex items-center gap-2 px-8 py-3 rounded-full bg-primary text-primary-foreground
-                  font-bold text-lg hover:opacity-90 transition-all duration-300"
+                className="flex items-center gap-2 px-8 py-3 rounded-lg bg-primary text-primary-foreground
+                  font-medium text-lg hover:opacity-90 transition-all duration-200"
               >
-                <Play size={20} /> Iniciar
+                <Play size={18} /> Iniciar
               </button>
             )}
 
             {timer.status === 'running' && (
               <button
                 onClick={timer.pause}
-                className="flex items-center gap-2 px-8 py-3 rounded-full bg-secondary text-secondary-foreground
-                  font-bold hover:bg-secondary/80 transition-all duration-300"
+                className="flex items-center gap-2 px-8 py-3 rounded-lg bg-secondary text-secondary-foreground
+                  font-medium hover:bg-secondary/80 transition-all duration-200"
               >
-                <Pause size={20} /> Pausar
+                <Pause size={18} /> Pausar
               </button>
             )}
 
             {timer.status === 'paused' && (
               <button
                 onClick={timer.resume}
-                className="flex items-center gap-2 px-8 py-3 rounded-full bg-primary text-primary-foreground
-                  font-bold hover:opacity-90 transition-all duration-300"
+                className="flex items-center gap-2 px-8 py-3 rounded-lg bg-primary text-primary-foreground
+                  font-medium hover:opacity-90 transition-all duration-200"
               >
-                <Play size={20} /> Reanudar
+                <Play size={18} /> Reanudar
               </button>
             )}
 
@@ -168,24 +159,23 @@ const FocusTimer = () => {
               <>
                 <button
                   onClick={() => timer.addTime(300)}
-                  className="flex items-center gap-1 px-5 py-3 rounded-full bg-secondary text-secondary-foreground
-                    font-medium hover:bg-secondary/80 transition-all duration-300"
+                  className="flex items-center gap-1 px-5 py-3 rounded-lg bg-secondary text-secondary-foreground
+                    font-medium hover:bg-secondary/80 transition-all duration-200"
                 >
                   <Plus size={16} /> 5 min
                 </button>
 
                 <button
                   onClick={handleFinishStep}
-                  className="flex items-center gap-2 px-8 py-3 rounded-full bg-success text-success-foreground
-                    font-bold hover:opacity-90 transition-all duration-300"
+                  className="flex items-center gap-2 px-8 py-3 rounded-lg bg-success text-success-foreground
+                    font-medium hover:opacity-90 transition-all duration-200"
                 >
-                  <Check size={20} /> Terminé este paso
+                  <Check size={18} /> Terminé
                 </button>
               </>
             )}
           </div>
 
-          {/* Next step hint */}
           {nextStep && (
             <p className="mt-10 text-sm text-muted-foreground">
               Siguiente: <span className="text-foreground">{nextStep.title}</span>
