@@ -10,17 +10,19 @@ export function TaskProgressBar({ completedSteps, totalSteps }: TaskProgressBarP
 
   return (
     <div className="w-full">
-      <div className="flex items-center justify-between mb-2">
-        <span className="text-sm text-muted-foreground">Progreso</span>
-        <span className="text-sm font-medium text-foreground">
-          {completedSteps}/{totalSteps} pasos
-        </span>
-      </div>
-      <div className="h-2.5 rounded-full bg-secondary overflow-hidden">
-        <div
-          className="h-full rounded-full bg-primary transition-all duration-500 ease-out"
-          style={{ width: `${percentage}%` }}
-        />
+      {/* Segmented dots – estilo Oura */}
+      <div className="flex items-center gap-1">
+        {Array.from({ length: totalSteps }).map((_, i) => (
+          <div
+            key={i}
+            className={[
+              'h-1 flex-1 rounded-full transition-all duration-500',
+              i < completedSteps
+                ? 'bg-primary'
+                : 'bg-secondary'
+            ].join(' ')}
+          />
+        ))}
       </div>
     </div>
   );
