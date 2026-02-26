@@ -18,15 +18,9 @@ const Onboarding = () => {
     <div className="min-h-screen bg-background flex flex-col items-center justify-center px-6">
       <div className="w-full max-w-sm animate-fade-in">
 
-        {/* Wordmark */}
-        <div className="flex items-center gap-2 mb-10">
-          <div className="w-2 h-2 rounded-full bg-primary" />
-          <span className="text-xs font-semibold tracking-widest uppercase text-primary">Aithena</span>
-        </div>
-
-        {/* Presentación */}
+        {/* Headline con emoji */}
         <h1 className="text-2xl font-semibold text-foreground leading-snug mb-4">
-          Hola, soy Aithena.
+          Hola, soy Aithena 👋
         </h1>
 
         <p className="text-sm text-muted-foreground leading-relaxed mb-3">
