@@ -48,30 +48,35 @@ const Home = () => {
     <div className="min-h-screen bg-background flex flex-col items-center justify-center px-6">
       <div className="w-full max-w-sm animate-fade-in">
 
-        {/* Greeting */}
+        {/* Saludo */}
         <p className="text-xs font-medium tracking-widest uppercase text-primary mb-2">
           {getGreeting()}
         </p>
 
-        {/* Name + headline */}
         <h1 className="text-3xl font-semibold text-foreground leading-tight mb-1">
           {state.userName}
         </h1>
-        <p className="text-sm text-muted-foreground mb-10">
-          ¿Qué tarea necesitás hacer ahora?
+
+        {/* Descripción breve de la app */}
+        <p className="text-sm text-muted-foreground mb-8 leading-relaxed">
+          Contame qué tenés que hacer y yo lo divido en pasos simples para que puedas empezar.
         </p>
 
-        {/* Divider line minimalista */}
-        <div className="h-px bg-border mb-8" />
+        {/* Divider */}
+        <div className="h-px bg-border mb-6" />
 
-        {/* Input area */}
+        {/* Pregunta + input */}
+        <p className="text-sm font-medium text-foreground mb-3">
+          ¿Qué tarea querés hacer ahora?
+        </p>
+
         <div className="space-y-3">
           <input
             type="text"
             value={taskInput}
             onChange={(e) => setTaskInput(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleBreakdown()}
-            placeholder="Escribí tu tarea"
+            placeholder="Ej: preparar el almuerzo"
             className="w-full px-4 py-3 rounded-xl bg-card border border-border text-foreground placeholder:text-muted-foreground text-base focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all duration-200 shadow-sm"
             autoFocus
             disabled={isLoading}
@@ -91,7 +96,7 @@ const Home = () => {
                 Analizando...
               </>
             ) : (
-              'Desglosar tarea'
+              'Desglosar en pasos'
             )}
           </button>
         </div>
