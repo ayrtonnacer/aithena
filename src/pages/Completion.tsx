@@ -6,7 +6,7 @@ import { ConfettiCelebration } from '@/components/ConfettiCelebration';
 const Completion = () => {
   const { state, addToHistory } = useApp();
   const navigate = useNavigate();
-  const [showConfetti, setShowConfetti] = useState(false);
+  const [triggerConfetti, setTriggerConfetti] = useState(false);
 
   const task = state.activeTask;
 
@@ -15,7 +15,8 @@ const Completion = () => {
       navigate('/home');
       return;
     }
-    const timeout = setTimeout(() => setShowConfetti(true), 300);
+    // Pequeño delay para que el confetti aparezca con la pantalla ya renderizada
+    const timeout = setTimeout(() => setTriggerConfetti(true), 400);
     return () => clearTimeout(timeout);
   }, []);
 
@@ -38,21 +39,19 @@ const Completion = () => {
 
   return (
     <div className="min-h-screen bg-background flex flex-col items-center justify-center px-6">
-      {showConfetti && <ConfettiCelebration />}
+      {/* Confetti – siempre montado, se dispara con trigger */}
+      <ConfettiCelebration trigger={triggerConfetti} />
 
       <div className="w-full max-w-sm animate-fade-in">
 
-        {/* Status dot + label */}
-        <div className="flex items-center gap-2 mb-6">
-          <div className="w-2 h-2 rounded-full bg-primary" />
-          <span className="text-xs font-semibold tracking-widest uppercase text-primary">Completado</span>
-        </div>
+        {/* Emoji grande de festejo */}
+        <div className="text-5xl mb-6 text-center">✨</div>
 
         {/* Headline */}
-        <h1 className="text-3xl font-semibold text-foreground leading-tight mb-1">
-          ¡Listo, {state.userName}!
+        <h1 className="text-3xl font-semibold text-foreground leading-tight mb-2 text-center">
+          ¡Lo lograste, {state.userName}!
         </h1>
-        <p className="text-sm text-muted-foreground mb-8">
+        <p className="text-sm text-muted-foreground mb-8 text-center">
           {task.name}
         </p>
 
@@ -61,22 +60,27 @@ const Completion = () => {
 
         {/* Stats – estilo Oura cards */}
         <div className="grid grid-cols-3 gap-3 mb-8">
-          <div className="p-4 rounded-xl bg-card border border-border">
+          <div className="p-4 rounded-xl bg-card border border-border text-center">
             <p className="text-xs text-muted-foreground mb-1">Estimado</p>
             <p className="text-xl font-semibold text-foreground tabular-nums">{totalEstMinutes}</p>
             <p className="text-xs text-muted-foreground">min</p>
           </div>
-          <div className="p-4 rounded-xl bg-card border border-border">
+          <div className="p-4 rounded-xl bg-card border border-border text-center">
             <p className="text-xs text-muted-foreground mb-1">Real</p>
             <p className="text-xl font-semibold text-foreground tabular-nums">{totalActMinutes}</p>
             <p className="text-xs text-muted-foreground">min</p>
           </div>
-          <div className="p-4 rounded-xl bg-card border border-border">
+          <div className="p-4 rounded-xl bg-card border border-border text-center">
             <p className="text-xs text-muted-foreground mb-1">Pasos</p>
             <p className="text-xl font-semibold text-foreground tabular-nums">{completedSteps}/{task.steps.length}</p>
             <p className="text-xs text-muted-foreground">ok</p>
           </div>
         </div>
+
+        {/* Mensaje de refuerzo positivo */}
+        <p className="text-xs text-center text-muted-foreground mb-6">
+          Cada tarea completada cuenta. 🌟
+        </p>
 
         {/* CTA */}
         <button
