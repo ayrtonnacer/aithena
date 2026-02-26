@@ -37,35 +37,51 @@ const Completion = () => {
   };
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center px-6">
-      <ConfettiCelebration show={showConfetti} />
-      <div className="text-center animate-fade-in max-w-sm w-full">
-        <p className="text-5xl mb-4">🎉</p>
-        <h1 className="text-3xl font-bold text-foreground mb-2">
+    <div className="min-h-screen bg-background flex flex-col items-center justify-center px-6">
+      {showConfetti && <ConfettiCelebration />}
+
+      <div className="w-full max-w-sm animate-fade-in">
+
+        {/* Status dot + label */}
+        <div className="flex items-center gap-2 mb-6">
+          <div className="w-2 h-2 rounded-full bg-primary" />
+          <span className="text-xs font-semibold tracking-widest uppercase text-primary">Completado</span>
+        </div>
+
+        {/* Headline */}
+        <h1 className="text-3xl font-semibold text-foreground leading-tight mb-1">
           ¡Listo, {state.userName}!
         </h1>
-        <p className="text-muted-foreground mb-6">
-          Terminaste: <span className="font-semibold text-foreground">{task.name}</span>
+        <p className="text-sm text-muted-foreground mb-8">
+          {task.name}
         </p>
 
-        <div className="bg-card border rounded-xl p-4 mb-8 text-sm text-left space-y-2">
-          <div className="flex justify-between">
-            <span className="text-muted-foreground">Tiempo estimado</span>
-            <span className="font-medium">{totalEstMinutes} min</span>
+        {/* Divider */}
+        <div className="h-px bg-border mb-6" />
+
+        {/* Stats – estilo Oura cards */}
+        <div className="grid grid-cols-3 gap-3 mb-8">
+          <div className="p-4 rounded-xl bg-card border border-border">
+            <p className="text-xs text-muted-foreground mb-1">Estimado</p>
+            <p className="text-xl font-semibold text-foreground tabular-nums">{totalEstMinutes}</p>
+            <p className="text-xs text-muted-foreground">min</p>
           </div>
-          <div className="flex justify-between">
-            <span className="text-muted-foreground">Tiempo real</span>
-            <span className="font-medium">{totalActMinutes} min</span>
+          <div className="p-4 rounded-xl bg-card border border-border">
+            <p className="text-xs text-muted-foreground mb-1">Real</p>
+            <p className="text-xl font-semibold text-foreground tabular-nums">{totalActMinutes}</p>
+            <p className="text-xs text-muted-foreground">min</p>
           </div>
-          <div className="flex justify-between">
-            <span className="text-muted-foreground">Pasos completados</span>
-            <span className="font-medium">{completedSteps}/{task.steps.length}</span>
+          <div className="p-4 rounded-xl bg-card border border-border">
+            <p className="text-xs text-muted-foreground mb-1">Pasos</p>
+            <p className="text-xl font-semibold text-foreground tabular-nums">{completedSteps}/{task.steps.length}</p>
+            <p className="text-xs text-muted-foreground">ok</p>
           </div>
         </div>
 
+        {/* CTA */}
         <button
           onClick={handleNewTask}
-          className="w-full py-3 rounded-xl bg-primary text-primary-foreground font-semibold text-base hover:opacity-90 active:scale-95 transition-all"
+          className="w-full py-3 rounded-xl bg-primary text-primary-foreground font-medium text-sm tracking-wide hover:bg-primary/90 active:scale-[0.98] transition-all duration-200"
         >
           Nueva tarea
         </button>
