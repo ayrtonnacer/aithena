@@ -19,21 +19,31 @@ const Onboarding = () => {
       <div className="w-full max-w-sm animate-fade-in">
 
         {/* Wordmark */}
-        <div className="flex items-center gap-2 mb-12">
+        <div className="flex items-center gap-2 mb-10">
           <div className="w-2 h-2 rounded-full bg-primary" />
           <span className="text-xs font-semibold tracking-widest uppercase text-primary">Aithena</span>
         </div>
 
-        {/* Headline */}
-        <h1 className="text-3xl font-semibold text-foreground leading-tight mb-2">
-          ¿Cómo te llamás?
+        {/* Presentación */}
+        <h1 className="text-2xl font-semibold text-foreground leading-snug mb-4">
+          Hola, soy Aithena.
         </h1>
-        <p className="text-sm text-muted-foreground mb-10">
-          Para saber con quién estoy hablando.
+
+        <p className="text-sm text-muted-foreground leading-relaxed mb-3">
+          Estoy aquí para acompañar a personas con TEA a completar sus tareas del día a día.
+        </p>
+
+        <p className="text-sm text-muted-foreground leading-relaxed mb-10">
+          Las personas con TEA a veces encuentran difícil planificar y empezar una tarea.
+          Yo la divido en pasos pequeños y te guío uno a uno, sin abrumarte.
         </p>
 
         {/* Divider */}
         <div className="h-px bg-border mb-8" />
+
+        <p className="text-base font-medium text-foreground mb-4">
+          ¿Cómo te llamás?
+        </p>
 
         {/* Form */}
         <div className="space-y-3">
@@ -51,7 +61,7 @@ const Onboarding = () => {
             disabled={!name.trim()}
             className="w-full py-3 rounded-xl bg-primary text-primary-foreground font-medium text-sm tracking-wide transition-all duration-200 hover:bg-primary/90 active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed"
           >
-            Continuar
+            Empezar
           </button>
         </div>
 
