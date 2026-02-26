@@ -29,7 +29,6 @@ const Home = () => {
     if (!taskInput.trim()) return;
     setIsLoading(true);
     await new Promise(resolve => setTimeout(resolve, 1500));
-
     const steps = generateMockBreakdown(taskInput);
     const task: Task = {
       id: `task-${Date.now()}`,
@@ -40,57 +39,63 @@ const Home = () => {
       totalEstimatedMinutes: steps.reduce((sum, s) => sum + s.estimatedDurationMinutes, 0),
       totalActualSeconds: 0,
     };
-
     setActiveTask(task);
     setIsLoading(false);
     navigate('/breakdown');
   };
 
   return (
-    <div className="min-h-screen bg-background flex items-center justify-center px-6">
-      <div className="text-center max-w-md w-full animate-fade-in">
-        <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-2">
-          {getGreeting()}, {state.userName}.
+    <div className="min-h-screen bg-background flex flex-col items-center justify-center px-6">
+      <div className="w-full max-w-sm animate-fade-in">
+
+        {/* Greeting */}
+        <p className="text-xs font-medium tracking-widest uppercase text-primary mb-2">
+          {getGreeting()}
+        </p>
+
+        {/* Name + headline */}
+        <h1 className="text-3xl font-semibold text-foreground leading-tight mb-1">
+          {state.userName}
         </h1>
-        <p className="text-muted-foreground mb-10">
+        <p className="text-sm text-muted-foreground mb-10">
           ¿Qué tarea necesitás hacer ahora?
         </p>
 
-        <div className="space-y-4">
+        {/* Divider line minimalista */}
+        <div className="h-px bg-border mb-8" />
+
+        {/* Input area */}
+        <div className="space-y-3">
           <input
             type="text"
             value={taskInput}
             onChange={(e) => setTaskInput(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleBreakdown()}
             placeholder="Escribí tu tarea"
-            className="w-full px-5 py-3.5 rounded-lg bg-card border border-border text-foreground
-              placeholder:text-muted-foreground text-center text-lg
-              focus:outline-none focus:ring-2 focus:ring-ring/30 transition-all duration-200"
+            className="w-full px-4 py-3 rounded-xl bg-card border border-border text-foreground placeholder:text-muted-foreground text-base focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all duration-200 shadow-sm"
             autoFocus
             disabled={isLoading}
           />
 
           <button
             onClick={handleBreakdown}
-            disabled={!taskInput.trim() || isLoading}
-            className="w-full py-3.5 rounded-lg bg-primary text-primary-foreground font-medium text-lg
-              hover:opacity-90 transition-all duration-200
-              disabled:opacity-30 disabled:cursor-not-allowed
-              flex items-center justify-center gap-2"
+            disabled={isLoading || !taskInput.trim()}
+            className="w-full py-3 rounded-xl bg-primary text-primary-foreground font-medium text-sm tracking-wide transition-all duration-200 hover:bg-primary/90 active:scale-[0.98] disabled:opacity-40 disabled:cursor-not-allowed flex items-center justify-center gap-2"
           >
             {isLoading ? (
               <>
-                <svg className="animate-spin h-5 w-5" viewBox="0 0 24 24" fill="none">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
+                <svg className="animate-spin h-4 w-4" viewBox="0 0 24 24" fill="none">
+                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="3" />
+                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z" />
                 </svg>
-                Pensando los pasos...
+                Analizando...
               </>
             ) : (
               'Desglosar tarea'
             )}
           </button>
         </div>
+
       </div>
     </div>
   );
