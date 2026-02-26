@@ -36,61 +36,39 @@ const Completion = () => {
     navigate('/home');
   };
 
-  const handleClose = () => {
-    addToHistory({
-      name: task.name,
-      date: new Date().toISOString(),
-      totalTimeMinutes: totalActMinutes,
-      stepsCompleted: completedSteps,
-      totalSteps: task.steps.length,
-    });
-    navigate('/rest');
-  };
-
   return (
     <div className="min-h-screen bg-background flex items-center justify-center px-6">
-      <ConfettiCelebration trigger={showConfetti} />
-
-      <div className="text-center max-w-sm animate-fade-in">
-        <p className="text-5xl mb-6">🎉</p>
+      <ConfettiCelebration show={showConfetti} />
+      <div className="text-center animate-fade-in max-w-sm w-full">
+        <p className="text-5xl mb-4">🎉</p>
         <h1 className="text-3xl font-bold text-foreground mb-2">
           ¡Listo, {state.userName}!
         </h1>
-        <p className="text-lg text-muted-foreground mb-8">
-          Terminaste: <span className="text-foreground font-medium">{task.name}</span>
+        <p className="text-muted-foreground mb-6">
+          Terminaste: <span className="font-semibold text-foreground">{task.name}</span>
         </p>
 
-        <div className="bg-card rounded-xl border border-border p-5 mb-8 text-left space-y-3">
+        <div className="bg-card border rounded-xl p-4 mb-8 text-sm text-left space-y-2">
           <div className="flex justify-between">
-            <span className="text-muted-foreground text-sm">Tiempo estimado</span>
-            <span className="font-medium text-foreground text-sm">{totalEstMinutes} min</span>
+            <span className="text-muted-foreground">Tiempo estimado</span>
+            <span className="font-medium">{totalEstMinutes} min</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-muted-foreground text-sm">Tiempo real</span>
-            <span className="font-medium text-foreground text-sm">{totalActMinutes} min</span>
+            <span className="text-muted-foreground">Tiempo real</span>
+            <span className="font-medium">{totalActMinutes} min</span>
           </div>
           <div className="flex justify-between">
-            <span className="text-muted-foreground text-sm">Pasos completados</span>
-            <span className="font-medium text-foreground text-sm">{completedSteps}/{task.steps.length}</span>
+            <span className="text-muted-foreground">Pasos completados</span>
+            <span className="font-medium">{completedSteps}/{task.steps.length}</span>
           </div>
         </div>
 
-        <div className="space-y-3">
-          <button
-            onClick={handleNewTask}
-            className="w-full py-3.5 rounded-lg bg-primary text-primary-foreground font-medium text-lg
-              hover:opacity-90 transition-all duration-200"
-          >
-            Nueva tarea
-          </button>
-          <button
-            onClick={handleClose}
-            className="w-full py-3 rounded-lg bg-secondary text-secondary-foreground font-medium
-              hover:bg-secondary/80 transition-all duration-200"
-          >
-            Cerrar por hoy
-          </button>
-        </div>
+        <button
+          onClick={handleNewTask}
+          className="w-full py-3 rounded-xl bg-primary text-primary-foreground font-semibold text-base hover:opacity-90 active:scale-95 transition-all"
+        >
+          Nueva tarea
+        </button>
       </div>
     </div>
   );
