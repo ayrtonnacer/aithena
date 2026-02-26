@@ -44,7 +44,6 @@ const FocusTimer = () => {
         totalActualSeconds: t.totalActualSeconds + timer.elapsedSeconds,
       };
     });
-
     const isLastStep = task.currentStepIndex === task.steps.length - 1;
     if (isLastStep) {
       navigate('/completion');
@@ -62,35 +61,42 @@ const FocusTimer = () => {
     navigate('/home');
   };
 
+  /* ── TRANSITION SCREEN ── */
   if (showTransition) {
     return (
-      <div className="min-h-screen bg-background flex items-center justify-center px-6">
-        <div className="text-center max-w-sm animate-fade-in">
-          <div className="w-14 h-14 rounded-full bg-success/10 flex items-center justify-center mx-auto mb-6">
-            <Check className="w-7 h-7 text-success animate-check-bounce" />
+      <div className="min-h-screen bg-background flex flex-col items-center justify-center px-6">
+        <div className="w-full max-w-sm animate-fade-in">
+
+          {/* Check icon */}
+          <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mb-6">
+            <Check className="w-6 h-6 text-primary" />
           </div>
-          <h2 className="text-2xl font-bold text-foreground mb-2">¡Paso completado!</h2>
-          <p className="text-muted-foreground mb-2">{currentStep.title}</p>
+
+          <p className="text-xs font-medium tracking-widest uppercase text-primary mb-2">
+            Paso completado
+          </p>
+          <h2 className="text-2xl font-semibold text-foreground leading-tight mb-1">
+            {currentStep.title}
+          </h2>
 
           {nextStep && (
-            <p className="text-sm text-muted-foreground mb-8">
-              Siguiente: <span className="text-foreground font-medium">{nextStep.title}</span>
-              <span className="text-muted-foreground"> · {nextStep.estimatedDurationMinutes} min</span>
-            </p>
+            <div className="mt-8 p-4 rounded-xl bg-card border border-border">
+              <p className="text-xs text-muted-foreground mb-1">Siguiente</p>
+              <p className="text-sm font-medium text-foreground">{nextStep.title}</p>
+              <span className="inline-block mt-1 text-xs text-primary font-medium">{nextStep.estimatedDurationMinutes} min</span>
+            </div>
           )}
 
-          <div className="space-y-3">
+          <div className="mt-8 space-y-2">
             <button
               onClick={handleNextStep}
-              className="w-full py-3.5 rounded-lg bg-primary text-primary-foreground font-medium text-lg
-                hover:opacity-90 transition-all duration-200"
+              className="w-full py-3 rounded-xl bg-primary text-primary-foreground font-medium text-sm tracking-wide hover:bg-primary/90 active:scale-[0.98] transition-all duration-200"
             >
-              Siguiente paso →
+              Siguiente paso
             </button>
             <button
               onClick={handleRest}
-              className="w-full py-3 rounded-lg bg-secondary text-secondary-foreground font-medium
-                hover:bg-secondary/80 transition-all duration-200"
+              className="w-full py-3 rounded-xl bg-secondary text-secondary-foreground font-medium text-sm tracking-wide hover:bg-secondary/80 active:scale-[0.98] transition-all duration-200"
             >
               Descansar
             </button>
@@ -100,88 +106,101 @@ const FocusTimer = () => {
     );
   }
 
+  /* ── MAIN TIMER SCREEN ── */
   return (
-    <div className="min-h-screen bg-background flex flex-col">
-      <div className="px-6 pt-6 max-w-lg mx-auto w-full">
-        <TaskProgressBar completedSteps={completedSteps} totalSteps={task.steps.length} />
-      </div>
+    <div className="min-h-screen bg-background flex flex-col px-6 pt-10 pb-8">
+      <div className="w-full max-w-sm mx-auto flex flex-col gap-6 animate-fade-in">
 
-      <div className="flex-1 flex items-center justify-center px-6">
-        <div className="text-center animate-fade-in">
-          <p className="text-sm text-muted-foreground mb-1">
-            Paso {currentStep.stepNumber} de {task.steps.length}
-          </p>
-          <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
+        {/* Progress */}
+        <div>
+          <div className="flex items-center justify-between mb-3">
+            <p className="text-xs font-medium tracking-widest uppercase text-muted-foreground">
+              Paso {currentStep.stepNumber} de {task.steps.length}
+            </p>
+            <p className="text-xs text-muted-foreground">
+              {completedSteps}/{task.steps.length} completados
+            </p>
+          </div>
+          <TaskProgressBar completedSteps={completedSteps} totalSteps={task.steps.length} />
+        </div>
+
+        {/* Step title */}
+        <div>
+          <h1 className="text-2xl font-semibold text-foreground leading-tight mb-1">
             {currentStep.title}
           </h1>
-          <p className="text-muted-foreground mb-8 max-w-sm mx-auto text-sm">
+          <p className="text-sm text-muted-foreground">
             {currentStep.description}
           </p>
+        </div>
 
+        {/* Timer */}
+        <div className="flex justify-center">
           <VisualTimer
             secondsLeft={timer.secondsLeft}
-            totalSeconds={timer.totalSeconds}
+            totalSeconds={(currentStep?.estimatedDurationMinutes ?? 15) * 60}
             status={timer.status}
           />
+        </div>
 
-          <div className="flex items-center justify-center gap-3 mt-8 flex-wrap">
-            {timer.status === 'idle' && (
+        {/* Controls */}
+        <div className="space-y-2">
+          {timer.status === 'idle' && (
+            <button
+              onClick={timer.start}
+              className="w-full py-3 rounded-xl bg-primary text-primary-foreground font-medium text-sm tracking-wide flex items-center justify-center gap-2 hover:bg-primary/90 active:scale-[0.98] transition-all duration-200"
+            >
+              <Play className="w-4 h-4" />
+              Iniciar
+            </button>
+          )}
+          {timer.status === 'running' && (
+            <button
+              onClick={timer.pause}
+              className="w-full py-3 rounded-xl bg-secondary text-secondary-foreground font-medium text-sm tracking-wide flex items-center justify-center gap-2 hover:bg-secondary/80 active:scale-[0.98] transition-all duration-200"
+            >
+              <Pause className="w-4 h-4" />
+              Pausar
+            </button>
+          )}
+          {timer.status === 'paused' && (
+            <button
+              onClick={timer.resume}
+              className="w-full py-3 rounded-xl bg-primary text-primary-foreground font-medium text-sm tracking-wide flex items-center justify-center gap-2 hover:bg-primary/90 active:scale-[0.98] transition-all duration-200"
+            >
+              <Play className="w-4 h-4" />
+              Reanudar
+            </button>
+          )}
+
+          {(timer.status === 'running' || timer.status === 'paused' || timer.status === 'finished') && (
+            <div className="flex gap-2">
               <button
-                onClick={timer.start}
-                className="flex items-center gap-2 px-8 py-3 rounded-lg bg-primary text-primary-foreground
-                  font-medium text-lg hover:opacity-90 transition-all duration-200"
+                onClick={() => timer.addTime(300)}
+                className="flex-1 py-3 rounded-xl bg-secondary text-secondary-foreground font-medium text-sm flex items-center justify-center gap-1 hover:bg-secondary/80 active:scale-[0.98] transition-all duration-200"
               >
-                <Play size={18} /> Iniciar
+                <Plus className="w-4 h-4" />
+                5 min
               </button>
-            )}
-
-            {timer.status === 'running' && (
               <button
-                onClick={timer.pause}
-                className="flex items-center gap-2 px-8 py-3 rounded-lg bg-secondary text-secondary-foreground
-                  font-medium hover:bg-secondary/80 transition-all duration-200"
+                onClick={handleFinishStep}
+                className="flex-1 py-3 rounded-xl bg-primary text-primary-foreground font-medium text-sm flex items-center justify-center gap-1 hover:bg-primary/90 active:scale-[0.98] transition-all duration-200"
               >
-                <Pause size={18} /> Pausar
+                <Check className="w-4 h-4" />
+                Terminé
               </button>
-            )}
-
-            {timer.status === 'paused' && (
-              <button
-                onClick={timer.resume}
-                className="flex items-center gap-2 px-8 py-3 rounded-lg bg-primary text-primary-foreground
-                  font-medium hover:opacity-90 transition-all duration-200"
-              >
-                <Play size={18} /> Reanudar
-              </button>
-            )}
-
-            {(timer.status === 'running' || timer.status === 'paused' || timer.status === 'finished') && (
-              <>
-                <button
-                  onClick={() => timer.addTime(300)}
-                  className="flex items-center gap-1 px-5 py-3 rounded-lg bg-secondary text-secondary-foreground
-                    font-medium hover:bg-secondary/80 transition-all duration-200"
-                >
-                  <Plus size={16} /> 5 min
-                </button>
-
-                <button
-                  onClick={handleFinishStep}
-                  className="flex items-center gap-2 px-8 py-3 rounded-lg bg-success text-success-foreground
-                    font-medium hover:opacity-90 transition-all duration-200"
-                >
-                  <Check size={18} /> Terminé
-                </button>
-              </>
-            )}
-          </div>
-
-          {nextStep && (
-            <p className="mt-10 text-sm text-muted-foreground">
-              Siguiente: <span className="text-foreground">{nextStep.title}</span>
-            </p>
+            </div>
           )}
         </div>
+
+        {/* Next step peek */}
+        {nextStep && (
+          <div className="p-4 rounded-xl bg-card border border-border">
+            <p className="text-xs text-muted-foreground mb-1">Después</p>
+            <p className="text-sm font-medium text-foreground">{nextStep.title}</p>
+          </div>
+        )}
+
       </div>
     </div>
   );
