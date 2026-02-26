@@ -17,14 +17,6 @@ Aithena es una aplicación web diseñada para personas con Trastorno del Espectr
 
 ---
 
-## Stack tecnológico
-
-- **Vite** + **React** + **TypeScript**
-- **Tailwind CSS** + **shadcn-ui**
-- IA para el desglose de tareas
-
----
-
 ## Desarrollo local
 
 ```bash
@@ -42,12 +34,6 @@ npm run dev
 ```
 
 Requiere Node.js. Se recomienda instalar con [nvm](https://github.com/nvm-sh/nvm#installing-and-updating).
-
----
-
-## Editar con Lovable
-
-Podés editar este proyecto directamente desde [Lovable](https://lovable.dev). Los cambios se commitean automáticamente a este repo.
 
 ---
 
