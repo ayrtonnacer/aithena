@@ -1,1 +1,4 @@
 project_id = "fjfglwwclsbyrnxbphgb"
+
+[functions.pexels-search]
+verify_jwt = false
