@@ -2,9 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useApp } from '@/lib/appContext';
 import { useTimer } from '@/hooks/useTimer';
+import { usePexelsImage } from '@/hooks/usePexelsImage';
 import { VisualTimer } from '@/components/VisualTimer';
 import { TaskProgressBar } from '@/components/TaskProgressBar';
 import { Play, Pause, Plus, Check } from 'lucide-react';
+import { Skeleton } from '@/components/ui/skeleton';
 
 const FocusTimer = () => {
   const { state, updateActiveTask } = useApp();
@@ -20,6 +22,10 @@ const FocusTimer = () => {
   const currentStep = task?.steps[task.currentStepIndex];
   const nextStep = task?.steps[(task?.currentStepIndex ?? 0) + 1];
   const completedSteps = task?.steps.filter(s => s.completed).length ?? 0;
+
+  // Build a search query from step title for a contextual photo
+  const imageQuery = currentStep?.title;
+  const { photo, loading: photoLoading } = usePexelsImage(imageQuery);
 
   const timer = useTimer((currentStep?.estimatedDurationMinutes ?? 15) * 60);
 
@@ -133,6 +139,23 @@ const FocusTimer = () => {
             {currentStep.description}
           </p>
         </div>
+
+        {/* Visual support image */}
+        {photoLoading ? (
+          <Skeleton className="w-full h-40 rounded-xl" />
+        ) : photo ? (
+          <div className="w-full rounded-xl overflow-hidden border border-border">
+            <img
+              src={photo.src}
+              alt={photo.alt || currentStep.title}
+              className="w-full h-40 object-cover"
+              loading="lazy"
+            />
+            <p className="text-[10px] text-muted-foreground px-2 py-1">
+              Foto: {photo.photographer} · Pexels
+            </p>
+          </div>
+        ) : null}
 
         {/* Timer */}
         <div className="flex justify-center">
